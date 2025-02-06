@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+import Service.SessionManager;
+
 public class LoginController {
 
     @FXML
@@ -22,9 +24,10 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (authenticate(username, password)) {
+            SessionManager.setLoggedInUser(username);//store logged in user
             loadChatPage();
         } else {
-            System.out.println("Invalid Credentials");
+            System.err.println("Login failed. Check your credentials.");
         }
     }
 
