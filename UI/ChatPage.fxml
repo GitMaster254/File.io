@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <!-- Menu Bar -->
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu text="File">
+          <items>
+            <MenuItem text="New Chat" />
+            <MenuItem text="Open Chat" />
+            <SeparatorMenuItem />
+            <MenuItem text="Exit" />
+          </items>
+        </Menu>
+        <Menu text="Edit">
+          <items>
+            <MenuItem text="Preferences" />
+          </items>
+        </Menu>
+        <Menu text="Help">
+          <items>
+            <MenuItem text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    
+    <HBox spacing="10.0" VBox.vgrow="ALWAYS">
+      <!-- Left Panel: Active Chats -->
+      <VBox prefWidth="200.0" style="-fx-background-color: #F0F0F0;">
+        <Label text="Active Chats" style="-fx-font-weight: bold; -fx-padding: 5;" />
+        <ListView fx:id="chatListView" VBox.vgrow="ALWAYS" />
+      </VBox>
+      
+      <!-- Main Chat Area -->
+      <VBox spacing="5.0" VBox.vgrow="ALWAYS" prefWidth="600.0">
+        <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
+          <VBox fx:id="chatBox" spacing="5.0" style="-fx-padding: 10;" />
+        </ScrollPane>
+        
+        <!-- Input Section -->
+        <HBox spacing="5.0" style="-fx-padding: 5;">
+          <TextField fx:id="messageInput" promptText="Type a message..." HBox.hgrow="ALWAYS" />
+          <Button text="Attach" fx:id="attachFileButton" />
+          <Button text="Send" fx:id="sendButton" />
+        </HBox>
+      </VBox>
+    </HBox>
+  </children>
+</VBox>
