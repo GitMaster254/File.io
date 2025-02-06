@@ -1,4 +1,4 @@
-package Util;
+package Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-public class ShareFile {
+public class FileService {
 
     // Define the directory where shared files will be saved
     private static final String SHARE_DIRECTORY = "shared_files/";
