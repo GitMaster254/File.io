@@ -8,6 +8,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        DatabaseUtil.initializeDatabase();
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/Register.fxml"));
             Scene scene = new Scene(loader.load());
