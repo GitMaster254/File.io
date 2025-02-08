@@ -55,9 +55,11 @@ public class LoginController {
 
     private void loadChatPage() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/ChatPage.fxml"));
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Register.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Register");
+            stage.setScene(new Scene(fxmlLoader.load(), 400, 400));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to open registration page.");
