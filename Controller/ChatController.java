@@ -141,6 +141,26 @@ public class ChatController {
     }
 
     private void sendFile(File file) {
+                // If file is null, open a FileChooser
+                if (file == null) {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Select File to Send");
+                    file = fileChooser.showOpenDialog(chatListView.getScene().getWindow());
+                }
+                if (file != null) {
+
+                    // Share the file (encrypt and save it locally) and create a FileMessage
+                    FileMessage fileMessage = FileService.shareFile(file, "Me");
+                    if (fileMessage != null) {
+                        // Store the file message in the database and update the UI
+                        chatservice.sendMessage(fileMessage);
+                        addMessageToChat(fileMessage);
+                    } else {
+                        showError("Failed to share file");
+                        return;
+                    }
+
+        //Optionally: send the file over the network(for demonstration purposes)
         try{
             Socket socket = new Socket(serverIP, port);
             OutputStream outputStream = socket.getOutputStream();
