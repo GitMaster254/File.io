@@ -50,7 +50,7 @@ public class ChatController {
 
     //handle file download when clicked
     public void onFileClicked(FileMessage fileMessage) {
-        //get the file from the storage dir
+        //get the encrypted file from the storage dir
         File encryptedFile = FileService.getFile(fileMessage.getFileName() + ".enc");
         if (encryptedFile != null) {
             FileChooser fileChooser = new FileChooser();
