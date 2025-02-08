@@ -14,14 +14,28 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
-
     @FXML
     private TextField usernameField;
 
     @FXML
     private PasswordField passwordField;
 
-    public void handleLogin(ActionEvent event) {
+    @FXML
+    private Button loginButton;
+
+    @FXML
+    private Hyperlink registerLink;
+
+    @FXML
+    private void initialize() {
+        // Handle login button click
+        loginButton.setOnAction(_ -> login());
+
+        // Navigate to registration page when "Register" is clicked
+        registerLink.setOnAction(_ -> openRegisterPage());
+    }
+
+    private void login() {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
