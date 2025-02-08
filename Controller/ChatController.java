@@ -24,7 +24,7 @@ import Networking.FileSender;
 import Networking.TransferListener;
 import Service.ChatService;
 import Service.FileService;
-import Service.SessionManager;
+// import Service.SessionManager;
 import Util.EncryptionUtil;
 import Models.FileMessage;
 import javafx.geometry.Pos;
