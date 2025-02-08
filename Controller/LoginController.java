@@ -13,8 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-import Service.SessionManager;
-
 public class LoginController {
 
     @FXML
