@@ -61,7 +61,7 @@ public class ChatController {
             File saveLocation =fileChooser.showOpenDialog(chatListView.getScene().getWindow());
             if(saveLocation != null){
                 try{
-                    //decrypt using stream
+                    //decrypt using stream before saving
                     EncryptionUtil.decryptFile(encryptedFile, saveLocation);
                     System.out.println("File decrypted and saved to:" + saveLocation.getAbsolutePath());
                 }catch(IOException e){
