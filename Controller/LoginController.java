@@ -49,13 +49,8 @@ public class LoginController {
             showAlert("Success", "Welcome, " + user.getUsername() + "!");
             //Redirect to the main chat page
         } else {
-            System.err.println("Login failed. Check your credentials.");
+            showAlert("Login Failed", "Invalid username or password.");
         }
-    }
-
-    private boolean authenticate(String username, String password) {
-        // Replace with actual authentication logic
-        return username.equals("user") && password.equals("pass");
     }
 
     private void loadChatPage() {
