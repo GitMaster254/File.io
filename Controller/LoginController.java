@@ -1,6 +1,7 @@
 package Controller;
 
-import javafx.event.ActionEvent;
+import Database.UserDAO;
+import Models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
