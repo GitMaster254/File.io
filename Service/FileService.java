@@ -1,11 +1,11 @@
 package Service;
 
 import Models.FileMessage;
+import Util.EncryptionUtil;
+
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 public class FileService {
 
@@ -27,20 +27,25 @@ public class FileService {
             } 
 
             // Define the path where the file will be stored
-            Path targetPath = Path.of(SHARE_DIRECTORY, file.getName());
+            Path encryptedPath = Path.of(SHARE_DIRECTORY, file.getName() + ".enc");
 
-            // Copy the file to the shared directory
-            Files.copy(file.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+            File encryptedFile = encryptedPath.toFile();
+            //Encrypted using buffered streaming
+            EncryptionUtil.encryptFile(file, encryptedFile);
 
-            System.out.println("File shared: " + targetPath);
+            System.out.println("File encrypted and shared: " + encryptedPath);
 
             // Return a FileMessage object for use in chat
-            return new FileMessage(sender, file.getName(), targetPath.toString());
+            return new FileMessage(sender, file.getName(), encryptedPath.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
             return null;  // Failed to share the file
-        }
+        } catch (Exception e) {
+                
+                e.printStackTrace();
+                }
+                return null;
     }
 
     // Method to retrieve a file for download
