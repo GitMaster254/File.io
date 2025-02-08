@@ -39,9 +39,15 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (authenticate(username, password)) {
-            SessionManager.setLoggedInUser(username);//store logged in user
-            loadChatPage();
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert("Error", "Please enter both username and password.");
+            return;
+        }
+
+        User user = UserDAO.loginUser(username, password);
+        if (user != null) {
+            showAlert("Success", "Welcome, " + user.getUsername() + "!");
+            //Redirect to the main chat page
         } else {
             System.err.println("Login failed. Check your credentials.");
         }
