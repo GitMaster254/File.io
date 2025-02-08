@@ -2,13 +2,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import Util.DatabaseUtil;
+import Database.DatabaseInitializer;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        DatabaseUtil.initializeDatabase();
+        DatabaseInitializer.initializeDatabase();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/Register.fxml"));
