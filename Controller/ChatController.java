@@ -46,7 +46,7 @@ public class ChatController {
         loadActiveChats();
         sendButton.setOnAction(_ -> sendMessage());
         attachFileButton.setOnAction(_ -> sendFile(null));
-    }
+        }
 
     //handle file download when clicked
     public void onFileClicked(FileMessage fileMessage) {
