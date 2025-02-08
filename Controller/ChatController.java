@@ -54,7 +54,7 @@ public class ChatController {
         File encryptedFile = FileService.getFile(fileMessage.getFileName() + ".enc");
         if (encryptedFile != null) {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(" Decrypted File");
+            fileChooser.setTitle("Save Decrypted File");
             fileChooser.setInitialFileName(fileMessage.getFileName());
             fileChooser.getExtensionFilters().add(new ExtensionFilter("All Files", "*.*"));
 
