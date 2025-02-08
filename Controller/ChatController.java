@@ -112,7 +112,7 @@ public class ChatController {
             messageInput.clear();
         }
     }
-
+    //Add a message (text or file) to the chat UI
     private void addMessageToChat(Message message) {
         TextFlow textFlow;
         if(message instanceof FileMessage){
