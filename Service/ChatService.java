@@ -17,6 +17,6 @@ public class ChatService {
     }
 
     public void sendMessage(Message message) {
-        chatData.computeIfAbsent("General", k -> new ArrayList<>()).add(message);
+        chatData.computeIfAbsent("General", _ -> new ArrayList<>()).add(message);
     }
 }
