@@ -71,7 +71,7 @@ public class ChatController {
                     e.printStackTrace();
                 }
             } else{
-                showError("File not found!");
+                showError("Save location not selected!");
             }
         }
 
