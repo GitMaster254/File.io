@@ -1,10 +1,11 @@
 {
     "configurations": [
-    {
-        "type": "java",
-        "name": "Launch Java Program",
-        "request": "launch",
-        "mainClass": "App"
-    }
+        {
+            "type": "java",
+            "name": "Launch Java Program",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "File.io_4a0e3aa5"
+        }
     ]
 }

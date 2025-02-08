@@ -1,0 +1,26 @@
+<!-- Register Page -->
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RegisterController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu text="Help">
+          <items>
+            <MenuItem text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    
+    <AnchorPane VBox.vgrow="ALWAYS">
+      <children>
+        <Label text="Register" layoutX="250" layoutY="50" fontSize="20" />
+        <TextField fx:id="usernameField" promptText="Username" layoutX="200" layoutY="100" />
+        <TextField fx:id="emailField" promptText="Email" layoutX="200" layoutY="140" />
+        <PasswordField fx:id="passwordField" promptText="Password" layoutX="200" layoutY="180" />
+        <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" layoutX="200" layoutY="220" />
+        <Button text="Register" fx:id="registerButton" layoutX="250" layoutY="260" />
+        <Hyperlink text="Login" layoutX="250" layoutY="300" fx:id="loginLink" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
