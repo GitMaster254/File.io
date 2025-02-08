@@ -60,16 +60,15 @@ public class LoginController {
             stage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Error", "Failed to open registration page.");
         }
     }
 
-    public void goToRegister(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/Register.fxml"));
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
