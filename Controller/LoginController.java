@@ -53,7 +53,7 @@ public class LoginController {
         }
     }
 
-    private void loadChatPage() {
+    private void openRegisterPage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Register.fxml"));
             Stage stage = new Stage();
