@@ -42,9 +42,16 @@ public class DatabaseInitializer {
                     + "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);";
             stmt.execute(createFilesTable);
 
+            //update the database schema
+            String addColumnSalt ="ALTER TABLE users ADD COLUMN salt TEXT DEFAULT '' ;";
+            stmt.execute(addColumnSalt);
+
             System.out.println("Database initialized successfully.");
         } catch (SQLException e) {
+            if(e.getMessage().contains("duplicate column name")){
+                System.out.println("Salt column already exist.");
+            }else{ 
             System.out.println("Error initializing database: " + e.getMessage());
-        }
+        }}
     }
 }
