@@ -2,6 +2,8 @@ package Controller;
 
 import Database.UserDAO;
 import Models.User;
+import Service.EncryptionService;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -36,7 +38,7 @@ public class LoginController {
     }
 
     private void login() {
-        String username = usernameField.getText();
+        String username = usernameField.getText().trim();
         String password = passwordField.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
@@ -44,10 +46,18 @@ public class LoginController {
             return;
         }
 
-        User user = UserDAO.loginUser(username, password);
+        //retrieve user form database
+        User user = UserDAO.getUserByUsername(username);
+
         if (user != null) {
-            showAlert("Success", "Welcome, " + user.getUsername() + "!");
-            //Redirect to the main chat page
+            //verify hashed password
+            if(EncryptionService.verifyPassword(password, user.getPassword(), user.getSalt())){
+                showAlert("Success", "Welcome," + user.getUsername() + "!");
+                openChatPage();
+            }else{
+                showAlert("Login Failed", "Invalid username or password");
+            }
+            
         } else {
             showAlert("Login Failed", "Invalid username or password.");
         }
@@ -66,6 +76,17 @@ public class LoginController {
         }
     }
 
+
+    private void openChatPage(){
+        try{
+            FXMLLoader fxmlLoader= new FXMLLoader( getClass().getResource("/UI/ChatPage.fxml"));
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(fxmlLoader.load()));
+        } catch(IOException e){
+            e.printStackTrace();
+            showAlert("Error", "Failed to open chat page");
+        }
+    }
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
