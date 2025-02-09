@@ -49,8 +49,38 @@ public class RegisterController {
         if(registerUser(name, email, hashedPassword, salt)){
             showAlert("Success", "User registered successfully");
             goToLogin(event);
-        } else {
-            System.out.println("Registration Failed");
+        } else{
+            showAlert("Error", "Registration failed! Try again.");
+        }
+    }
+    //validate email
+    private boolean isValidEmail(String email) {
+    String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+    return Pattern.matches(emailRegex, email);
+    }
+
+     private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }  
+    
+        private boolean registerUser(String name, String email, String hashedPassword, String salt) {
+        String query = "INSERT INTO users (name, email, password, salt) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBHelper.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, name);
+            pstmt.setString(2, email);
+            pstmt.setString(3, hashedPassword);
+            pstmt.setString(4, salt);
+
+            return pstmt.executeUpdate() > 0; // Returns true if insertion is successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
