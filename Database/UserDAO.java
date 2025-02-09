@@ -49,5 +49,28 @@ public class UserDAO {
         }
         return null;
     }
+
+    public static User getUserByUsername(String username){
+        String query = "SELECT * FROM users WHERE username ?";
+
+        try(Connection conn = DBHelper.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                return new User(
+                rs.getInt("id"),
+                rs.getString("username"),
+                rs.getString("email"),
+                rs.getString("password"), //hashed password
+                rs.getString("salt") //salt
+                );
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null; //user not found
+    }
 }
 
