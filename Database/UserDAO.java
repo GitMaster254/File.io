@@ -40,7 +40,8 @@ public class UserDAO {
                         rs.getInt("id"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        rs.getString("email")
+                        rs.getString("email"),
+                        rs.getString("salt")
                 );
             }
         } catch (SQLException e) {
