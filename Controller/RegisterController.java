@@ -31,8 +31,23 @@ public class RegisterController {
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
-        if (password.equals(confirmPassword) && !name.isEmpty() && !email.isEmpty()) {
-            System.out.println("User Registered: " + name);
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            showAlert("Error", "All fields are required");
+            return;
+        } if(!isValidEmail(email)) {
+            showAlert("Error", "Invalid email format");
+            return;
+        } if(!password.equals(confirmPassword)) {
+            showAlert("Error", "Passwords do not match");
+            return;
+        }
+        //Hash password with salt
+        String salt = EncryptionService.generateSalt();
+        String hashedPassword = EncryptionService.hashPassword(password, salt);
+
+        //store in database
+        if(registerUser(name, email, hashedPassword, salt)){
+            showAlert("Success", "User registered successfully");
             goToLogin(event);
         } else {
             System.out.println("Registration Failed");
