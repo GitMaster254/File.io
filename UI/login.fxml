@@ -24,7 +24,7 @@
     
     <AnchorPane VBox.vgrow="ALWAYS">
       <children>
-        <Label text="Login" layoutX="250" layoutY="50" fontSize="20" />
+        <Label text="Login" layoutX="250" layoutY="50" style="-fx-font-size:20;" />
         <TextField fx:id="usernameField" promptText="Username" layoutX="200" layoutY="100" />
         <PasswordField fx:id="passwordField" promptText="Password" layoutX="200" layoutY="150" />
         <Button text="Login" fx:id="loginButton" layoutX="250" layoutY="200" />
