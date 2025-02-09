@@ -55,7 +55,7 @@ public class LoginController {
 
     private void openRegisterPage() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Register.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UI/Register.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Register");
             stage.setScene(new Scene(fxmlLoader.load(), 400, 400));
