@@ -28,24 +28,32 @@
         </Menu>
       </menus>
     </MenuBar>
-    
+
     <HBox spacing="10.0" VBox.vgrow="ALWAYS">
       <!-- Left Panel: Active Chats -->
-      <VBox prefWidth="200.0" style="-fx-background-color: #F0F0F0;">
-        <Label text="Active Chats" style="-fx-font-weight: bold; -fx-padding: 5;" />
+      <VBox prefWidth="250.0" style="-fx-background-color: #F0F0F0; -fx-padding: 10;">
+        <Label text="Chats" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+        <TextField fx:id="searchChatInput" promptText="Search chats..." />
         <ListView fx:id="chatListView" VBox.vgrow="ALWAYS" />
       </VBox>
-      
+
       <!-- Main Chat Area -->
-      <VBox spacing="5.0" VBox.vgrow="ALWAYS" prefWidth="600.0">
+      <VBox spacing="5.0" VBox.vgrow="ALWAYS" prefWidth="550.0">
+        <!-- Chat Header -->
+        <HBox spacing="10.0" style="-fx-background-color: #E0E0E0; -fx-padding: 10;">
+          <Label fx:id="chatTitle" text="Select a chat" style="-fx-font-weight: bold; -fx-font-size: 16px;" HBox.hgrow="ALWAYS"/>
+          <Button text="⋮" fx:id="chatOptionsButton" />
+        </HBox>
+
         <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
           <VBox fx:id="chatBox" spacing="5.0" style="-fx-padding: 10;" />
         </ScrollPane>
-        
+
         <!-- Input Section -->
         <HBox spacing="5.0" style="-fx-padding: 5;">
+          <Button text="😊" fx:id="emojiButton" />
           <TextField fx:id="messageInput" promptText="Type a message..." HBox.hgrow="ALWAYS" />
-          <Button text="Attach" fx:id="attachFileButton" />
+          <Button text="📎" fx:id="attachFileButton" />
           <Button text="Send" fx:id="sendButton" />
         </HBox>
       </VBox>
