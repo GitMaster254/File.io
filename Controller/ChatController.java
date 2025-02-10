@@ -49,6 +49,11 @@ public class ChatController {
         loadActiveChats();
         sendButton.setOnAction(_ -> sendMessage());
         attachFileButton.setOnAction(_ -> sendFile(null));
+        ChatListView.getSelectionModel().selectedItemProperty().addListener((obs, oldChat, newChat) -> {
+            if(newChat != null){
+                chatTitle.setText(newChat);
+            }
+        });
         }
 
     //handle file download when clicked
