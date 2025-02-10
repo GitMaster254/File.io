@@ -34,6 +34,16 @@ public class LoginController {
 
     @FXML
     private void initialize() {
+        //handle view password field
+        showPasswordCheckBox.setOnAction(event ->{
+            if(showPasswordCheckBox.isSelected()){
+                passwordField.setPromptText(passwordField.getText());
+                passwordField.clear();
+            } else {
+            passwordField.setText(passwordField.getPromptText());
+            passwordField.setPromptText("Password");
+            }
+        });
         // Handle login button click
         loginButton.setOnAction(_ -> login());
 
