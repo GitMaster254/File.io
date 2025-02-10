@@ -37,6 +37,8 @@ public class ChatController {
     @FXML private TextArea messageInput;
     @FXML private Button sendButton;
     @FXML private Button attachFileButton;
+    @FXML private Label chatTitle;
+    @FXML private ListView<String> ChatListView;
 
     private ChatService chatservice = new ChatService();
     private static final String serverIP = "10.0.0.1";
