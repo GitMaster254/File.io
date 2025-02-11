@@ -92,7 +92,7 @@ public class RegisterController {
     public void goToLogin(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/login.fxml"));
-            Stage stage = (Stage) nameField.getScene().getWindow();
+            Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             e.printStackTrace();
