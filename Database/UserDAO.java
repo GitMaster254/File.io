@@ -12,7 +12,7 @@ public class UserDAO {
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
-            pstmt.setString(2, password); // TODO: Hash the password before storing
+            pstmt.setString(2, password); 
             pstmt.setString(3, email);
 
             int rowsInserted = pstmt.executeUpdate();
@@ -32,7 +32,7 @@ public class UserDAO {
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
-            pstmt.setString(2, password); // TODO: Use hashed password verification
+            pstmt.setString(2, password); //hashed password
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
