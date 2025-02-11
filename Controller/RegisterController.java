@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 
 import Service.EncryptionService;
 import Database.DBHelper;
