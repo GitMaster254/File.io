@@ -31,8 +31,8 @@
         <TextField fx:id="emailField" promptText="Email" layoutX="200" layoutY="140" />
         <PasswordField fx:id="passwordField" promptText="Password" layoutX="200" layoutY="180" />
         <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" layoutX="200" layoutY="220" />
-        <Button text="Register" fx:id="registerButton" layoutX="250" layoutY="260" />
-        <Hyperlink text="Login" layoutX="250" layoutY="300" fx:id="loginLink" />
+        <Button text="Register" fx:id="registerButton" layoutX="250" layoutY="260" onAction="#handleRegister"/>
+        <Hyperlink text="Login" layoutX="250" layoutY="300" fx:id="loginLink" onAction="#goToLogin"/>
       </children>
     </AnchorPane>
   </children>
