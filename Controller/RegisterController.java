@@ -22,13 +22,16 @@ import Database.DBHelper;
 public class RegisterController {
 
     @FXML
-    private TextField nameField, emailField;
+    private TextField usernameField, emailField;
 
-    @FXML
+    @FXML 
     private PasswordField passwordField, confirmPasswordField;
 
+    @FXML private Button registerButton ;
+    @FXML private Hyperlink loginLink;
+
     public void handleRegister(ActionEvent event) {
-        String name = nameField.getText();
+        String name = usernameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
