@@ -31,9 +31,9 @@
       <CheckBox fx:id="showPasswordCheckBox" text="Show Password" />
     </HBox>
 
-    <Button text="Login" fx:id="loginButton" maxWidth="250" style="-fx-background-color: #007BFF; -fx-text-fill: white;" onAction="#goToLogin"/>
+    <Button text="Login" fx:id="loginButton" maxWidth="250" style="-fx-background-color: #007BFF; -fx-text-fill: white;" onAction="#login"/>
 
-    <Hyperlink text="Register" fx:id="registerLink" style="-fx-text-fill: #007BFF;" onAction="#goToLogin"/>
+    <Hyperlink text="Register" fx:id="registerLink" style="-fx-text-fill: #007BFF;" onAction="#openRegisterPage"/>
 
   </VBox>
 
