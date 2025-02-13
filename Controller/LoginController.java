@@ -6,6 +6,7 @@ import Service.EncryptionService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
+    private static Stage primaryStage;
     @FXML
     private TextField usernameField;
 
@@ -31,6 +33,13 @@ public class LoginController {
 
     @FXML
     private CheckBox showPasswordCheckBox;
+
+    public static void setPrimaryStage(Stage stage){
+        primaryStage =stage;
+    }
+    public static Stage getPrimaryStage(){
+        return primaryStage;
+    }
 
     @FXML
     private void initialize() {
@@ -78,28 +87,13 @@ public class LoginController {
     }
 
     private void openRegisterPage() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UI/Register.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Register");
-            stage.setScene(new Scene(fxmlLoader.load(), 400, 400));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "Failed to open registration page.");
-        }
+        loadScene("/UI/Register.fxml", "Create Account");
+
     }
 
 
     private void openChatPage(){
-        try{
-            FXMLLoader fxmlLoader= new FXMLLoader( getClass().getResource("/UI/ChatPage.fxml"));
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(fxmlLoader.load()));
-        } catch(IOException e){
-            e.printStackTrace();
-            showAlert("Error", "Failed to open chat page");
-        }
+        loadScene("/UI/ChatPage.fxml", "Chat Page");
     }
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -107,5 +101,26 @@ public class LoginController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+        @FXML
+        public void loadScene(String fxmlFile, String title) {
+        if (primaryStage == null) {
+            System.err.println("Primary stage is not set. Please call setPrimaryStage() before attempting scene transitions.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            primaryStage.setTitle(title);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.err.println("Failed to load FXML file: " + fxmlFile);
+            e.printStackTrace();
+        }
     }
 }
