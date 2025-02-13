@@ -22,8 +22,8 @@ public class UserDAO {
              pstmt.setString(3,salt);
              pstmt.setString(4, email);
 
-            int rowsInserted = pstmt.executeUpdate();
-            return rowsInserted > 0;
+             int rowsInserted = pstmt.executeUpdate();
+             return rowsInserted > 0;
 
         } catch (SQLException e) {
             System.out.println("Error registering user: " + e.getMessage());
@@ -32,17 +32,26 @@ public class UserDAO {
     }
 
     // Authenticate user (Login)
-    public static User loginUser(String username, String password) {
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+    public static User loginUser(String username, String enteredPassword) {
+        String query = "SELECT * FROM users WHERE username = ?";
 
         try (Connection conn = DBHelper.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
-            pstmt.setString(2, password); // TODO: Use hashed password verification
-
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
+
+            if(rs.next()){ 
+            //retrive stored hash and salt
+            String storedHash = rs.getString("password");
+            String storedSalt = rs.getString("salt");
+
+            //Hash the entered password using stored salt
+            String enteredHash = EncryptionService.hashPassword(enteredPassword, storedSalt);
+
+            //compare the hashes
+            if(storedHash.equals(enteredHash)){
+                //Authentication successful
                 return new User(
                         rs.getInt("id"),
                         rs.getString("username"),
@@ -51,6 +60,7 @@ public class UserDAO {
                         rs.getString("salt")
                 );
             }
+        }
         } catch (SQLException e) {
             System.out.println("Login error: " + e.getMessage());
         }
