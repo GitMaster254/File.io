@@ -13,9 +13,14 @@ public class UserDAO {
         try (Connection conn = DBHelper.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, username);
-            pstmt.setString(2, password); // TODO: Hash the password before storing
-            pstmt.setString(3, email);
+                //Generate a salt and hash password
+                String salt =EncryptionService.generateSalt();
+                String hashedPassword = EncryptionService.hashPassword(password, salt);
+
+             pstmt.setString(1, username);
+             pstmt.setString(2, hashedPassword); 
+             pstmt.setString(3,salt);
+             pstmt.setString(4, email);
 
             int rowsInserted = pstmt.executeUpdate();
             return rowsInserted > 0;
