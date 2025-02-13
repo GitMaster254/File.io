@@ -1,5 +1,6 @@
 package Service;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -18,8 +19,8 @@ public class EncryptionService {
     public static String hashPassword(String password, String salt) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(salt.getBytes()); // Add salt to hash
-            byte[] hashedBytes = md.digest(password.getBytes());
+            md.update(salt.getBytes(StandardCharsets.UTF_8)); // Add salt to hash
+            byte[] hashedBytes = md.digest(password.getBytes(StandardCharsets.UTF_8)); // Hash password
 
             return Base64.getEncoder().encodeToString(hashedBytes); // Convert to readable format
         } catch (Exception e) {
