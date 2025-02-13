@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import Controller.LoginController;
 import Database.DatabaseInitializer;
 
 public class App extends Application {
@@ -11,11 +12,10 @@ public class App extends Application {
         DatabaseInitializer.initializeDatabase();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/Register.fxml"));
-            Scene scene = new Scene(loader.load());
+            LoginController.setPrimaryStage(primaryStage);
             
             primaryStage.setTitle("Chat App");
-            primaryStage.setScene(scene);
+            primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/UI/login.fxml"))));
             primaryStage.setResizable(false);
             primaryStage.show();
         } catch (Exception e) {
