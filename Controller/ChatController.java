@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
@@ -24,7 +25,7 @@ import Networking.FileSender;
 import Networking.TransferListener;
 import Service.ChatService;
 import Service.FileService;
-import Service.SessionManager;
+// import Service.SessionManager;
 import Util.EncryptionUtil;
 import Models.FileMessage;
 import javafx.geometry.Pos;
@@ -36,6 +37,8 @@ public class ChatController {
     @FXML private TextArea messageInput;
     @FXML private Button sendButton;
     @FXML private Button attachFileButton;
+    @FXML private Label chatTitle;
+    @FXML private ListView<String> ChatListView;
 
     private ChatService chatservice = new ChatService();
     private static final String serverIP = "10.0.0.1";
@@ -46,22 +49,27 @@ public class ChatController {
         loadActiveChats();
         sendButton.setOnAction(_ -> sendMessage());
         attachFileButton.setOnAction(_ -> sendFile(null));
-    }
+        ChatListView.getSelectionModel().selectedItemProperty().addListener((obs, oldChat, newChat) -> {
+            if(newChat != null){
+                chatTitle.setText(newChat);
+            }
+        });
+        }
 
     //handle file download when clicked
     public void onFileClicked(FileMessage fileMessage) {
-        //get the file from the storage dir
+        //get the encrypted file from the storage dir
         File encryptedFile = FileService.getFile(fileMessage.getFileName() + ".enc");
         if (encryptedFile != null) {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(" Decrypted File");
+            fileChooser.setTitle("Save Decrypted File");
             fileChooser.setInitialFileName(fileMessage.getFileName());
             fileChooser.getExtensionFilters().add(new ExtensionFilter("All Files", "*.*"));
 
             File saveLocation =fileChooser.showOpenDialog(chatListView.getScene().getWindow());
             if(saveLocation != null){
                 try{
-                    //decrypt using stream
+                    //decrypt using stream before saving
                     EncryptionUtil.decryptFile(encryptedFile, saveLocation);
                     System.out.println("File decrypted and saved to:" + saveLocation.getAbsolutePath());
                 }catch(IOException e){
@@ -71,7 +79,7 @@ public class ChatController {
                     e.printStackTrace();
                 }
             } else{
-                showError("File not found!");
+                showError("Save location not selected!");
             }
         }
 
@@ -112,7 +120,7 @@ public class ChatController {
             messageInput.clear();
         }
     }
-
+    //Add a message (text or file) to the chat UI
     private void addMessageToChat(Message message) {
         TextFlow textFlow;
         if(message instanceof FileMessage){
@@ -141,6 +149,26 @@ public class ChatController {
     }
 
     private void sendFile(File file) {
+                // If file is null, open a FileChooser
+                if (file == null) {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Select File to Send");
+                    file = fileChooser.showOpenDialog(chatListView.getScene().getWindow());
+                }
+                if (file != null) {
+
+                    // Share the file (encrypt and save it locally) and create a FileMessage
+                    FileMessage fileMessage = FileService.shareFile(file, "Me");
+                    if (fileMessage != null) {
+                        // Store the file message in the database and update the UI
+                        chatservice.sendMessage(fileMessage);
+                        addMessageToChat(fileMessage);
+                    } else {
+                        showError("Failed to share file");
+                        return;
+                    }
+
+        //Optionally: send the file over the network(for demonstration purposes)
         try{
             Socket socket = new Socket(serverIP, port);
             OutputStream outputStream = socket.getOutputStream();
@@ -168,7 +196,13 @@ public class ChatController {
         }
         
     }
+}
     private void showInfo( String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Info");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
 
     }
 
