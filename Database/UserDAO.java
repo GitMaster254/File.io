@@ -1,6 +1,8 @@
 package Database;
 
 import Models.User;
+import Service.EncryptionService;
+
 import java.sql.*;
 
 public class UserDAO {
