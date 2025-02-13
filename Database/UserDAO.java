@@ -51,7 +51,7 @@ public class UserDAO {
     }
 
     public static User getUserByUsername(String username){
-        String query = "SELECT * FROM users WHERE username ?";
+        String query = "SELECT * FROM users WHERE username = ?";
 
         try(Connection conn = DBHelper.getConnection();
         PreparedStatement stmt = conn.prepareStatement(query)){
