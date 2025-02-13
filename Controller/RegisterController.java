@@ -3,11 +3,11 @@ package Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,13 +20,13 @@ import Database.DBHelper;
 public class RegisterController {
 
     @FXML
-    private TextField nameField, emailField;
+    private TextField usernameField, emailField;
 
     @FXML
     private PasswordField passwordField, confirmPasswordField;
 
     public void handleRegister(ActionEvent event) {
-        String name = nameField.getText();
+        String name = usernameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
@@ -40,6 +40,8 @@ public class RegisterController {
         } if(!password.equals(confirmPassword)) {
             showAlert("Error", "Passwords do not match");
             return;
+        } if(!isValidPassword(password)){
+            showAlert("Error", "Password must be at least 8 characters long and contain letters and numbers");
         }
         //Hash password with salt
         String salt = EncryptionService.generateSalt();
@@ -50,8 +52,12 @@ public class RegisterController {
             showAlert("Success", "User registered successfully");
             goToLogin(event);
         } else{
-            showAlert("Error", "Registration failed! Try again.");
+            showAlert("Error", "An expected error occured. Please try again.");
         }
+        
+    }
+    private boolean isValidPassword(String password){
+        return password.length() >= 8 && password.matches(".*[A-Za-z].*") && password.matches(".*[0-9].*");
     }
     //validate email
     private boolean isValidEmail(String email) {
@@ -68,7 +74,7 @@ public class RegisterController {
     }  
     
         private boolean registerUser(String name, String email, String hashedPassword, String salt) {
-        String query = "INSERT INTO users (name, email, password, salt) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO users (username, email, password, salt) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBHelper.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
@@ -86,9 +92,8 @@ public class RegisterController {
 
     public void goToLogin(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/login.fxml"));
-            Stage stage = (Stage) nameField.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
+            Parent root = FXMLLoader.load(getClass().getResource("/UI/login.fxml"));
+            LoginController.getPrimaryStage().setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
         }
