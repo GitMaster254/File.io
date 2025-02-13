@@ -31,6 +31,12 @@ public class EncryptionService {
     // Verify if a password matches the stored hash
     public static boolean verifyPassword(String enteredPassword, String storedHash, String storedSalt) {
         String enteredHash = hashPassword(enteredPassword, storedSalt);
+
+        //debug logs
+        System.out.println("stored hash" + storedHash);
+        System.out.println("entered hash" + enteredHash);
+        System.out.println("stored salt" + storedSalt);
+        
         return storedHash.equals(enteredHash);
     }
 }
