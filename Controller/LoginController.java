@@ -1,24 +1,17 @@
 package Controller;
 
 import Database.UserDAO;
-import Models.User;
-import Service.EncryptionService;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
     private static Stage primaryStage;
+    
     @FXML
     private TextField usernameField;
 
@@ -34,25 +27,27 @@ public class LoginController {
     @FXML
     private CheckBox showPasswordCheckBox;
 
-    public static void setPrimaryStage(Stage stage){
-        primaryStage =stage;
+    public static void setPrimaryStage(Stage stage) {
+        primaryStage = stage;
     }
-    public static Stage getPrimaryStage(){
+
+    public static Stage getPrimaryStage() {
         return primaryStage;
     }
 
     @FXML
     private void initialize() {
-        //handle view password field
-        showPasswordCheckBox.setOnAction(event ->{
-            if(showPasswordCheckBox.isSelected()){
+        // Handle view password toggle
+        showPasswordCheckBox.setOnAction(event -> {
+            if (showPasswordCheckBox.isSelected()) {
                 passwordField.setPromptText(passwordField.getText());
                 passwordField.clear();
             } else {
-            passwordField.setText(passwordField.getPromptText());
-            passwordField.setPromptText("Password");
+                passwordField.setText(passwordField.getPromptText());
+                passwordField.setPromptText("Password");
             }
         });
+
         // Handle login button click
         loginButton.setOnAction(_ -> login());
 
@@ -69,18 +64,10 @@ public class LoginController {
             return;
         }
 
-        //retrieve user form database
-        User user = UserDAO.getUserByUsername(username);
-
-        if (user != null) {
-            //verify hashed password
-            if(EncryptionService.verifyPassword(password, user.getPassword(), user.getSalt())){
-                showAlert("Success", "Welcome," + user.getUsername() + "!");
-                openChatPage();
-            }else{
-                showAlert("Login Failed", "Invalid username or password");
-            }
-            
+        // Validate credentials through UserDAO
+        if (UserDAO.validateCredentials(username, password)) {
+            showAlert("Success", "Welcome, " + username + "!");
+            openChatPage();
         } else {
             showAlert("Login Failed", "Invalid username or password.");
         }
@@ -88,13 +75,12 @@ public class LoginController {
 
     private void openRegisterPage() {
         loadScene("/UI/Register.fxml", "Create Account");
-
     }
 
-
-    private void openChatPage(){
+    private void openChatPage() {
         loadScene("/UI/ChatPage.fxml", "Chat Page");
     }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -103,8 +89,8 @@ public class LoginController {
         alert.showAndWait();
     }
 
-        @FXML
-        public void loadScene(String fxmlFile, String title) {
+    @FXML
+    public void loadScene(String fxmlFile, String title) {
         if (primaryStage == null) {
             System.err.println("Primary stage is not set. Please call setPrimaryStage() before attempting scene transitions.");
             return;
