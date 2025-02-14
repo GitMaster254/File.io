@@ -39,5 +39,5 @@ public class EncryptionService {
         System.out.println("stored salt" + storedSalt);
         
         return storedHash.equals(enteredHash);
-    }
+    } 
 }
